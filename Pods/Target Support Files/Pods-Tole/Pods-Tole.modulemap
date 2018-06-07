@@ -1,0 +1,6 @@
+framework module Pods_Tole {
+  umbrella header "Pods-Tole-umbrella.h"
+
+  export *
+  module * { export * }
+}
