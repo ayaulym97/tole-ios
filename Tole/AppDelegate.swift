@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.swift
 //  Tole
@@ -24,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
         if launchedBefore  {
             print("Not first launch.")
+//            navigationController = UINavigationController(rootViewController: LoginViewController())
             navigationController = UINavigationController(rootViewController: LoginViewController())
         } else {
             print("First launch, setting UserDefault.")

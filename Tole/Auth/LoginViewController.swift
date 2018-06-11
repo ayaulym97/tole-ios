@@ -61,7 +61,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
         let btn = UIButton()
         let yourAttributes : [NSAttributedStringKey: Any] = [
             NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18),
-            NSAttributedStringKey.foregroundColor : UIColor.white,
+            NSAttributedStringKey.foregroundColor : UIColor.white
             ]
         let attributeString = NSMutableAttributedString(string: "Войти",
                                                         attributes: yourAttributes)

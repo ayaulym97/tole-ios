@@ -27,7 +27,7 @@ class GoodsViewController: UIViewController {
     lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero)
         table.delegate = self
-        table.dataSource = self
+        table.dataSource = self 
         table.register(UITableViewCell.self, forCellReuseIdentifier: Constant.goodsTableViewCellIdentifier)
         return table
     }()
