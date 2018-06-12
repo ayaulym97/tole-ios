@@ -8,14 +8,13 @@
 
 import Foundation
 class ProductModel {
-   let image : String?
     let productTitle: String?
     let price: String?
     let count: String?
     
     
-    init(image: String ,productTitle: String,price: String, count: String) {
-        self.image = image
+    init(productTitle: String,price: String, count: String) {
+
         self.productTitle = productTitle
         self.price = price
         self.count = count

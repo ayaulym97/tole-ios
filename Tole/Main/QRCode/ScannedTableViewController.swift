@@ -6,13 +6,21 @@
 //  Copyright © 2018 Beknar Danabek. All rights reserved.
 //
 
-import UIKit
 
-class ScannedTableViewController: UIViewController {
+
+import UIKit
+import Cartography
+class ScannedTableViewController: UIViewController,someDelegate
+{
+    func valueLable(update:Any) {
+        filteredGoods = update as! [ProductModel]
+        
+    }
+    
+   
     lazy var goods:[ProductModel] = []
     lazy var filteredGoods: [ProductModel] = []
-    var delegate:filteredProducts?
-    let backButton = UIBarButtonItem(title: "Home/Return or nohing", style: .bordered, target: nil, action: nil)
+   // let backButton = UIBarButtonItem(title: "Home/Return or nohing", style: .bordered, target: nil, action: nil)
     //MARK: - UIinit
     lazy var searchBar: UISearchBar = {
         let search = UISearchBar(frame: .zero)
@@ -34,7 +42,7 @@ class ScannedTableViewController: UIViewController {
     
     lazy var customView: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor = .white
+        view.backgroundColor =  UIColor.yellow
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         return view
@@ -73,11 +81,12 @@ class ScannedTableViewController: UIViewController {
         setupViews()
         setupConstraints()
         setupNavigationBar()
+        print(filteredGoods)
         
-        goods.append(ProductModel(image: "keks", productTitle: "Bakery Frozen", price: "15$", count: "20kg"))
-        goods.append(ProductModel(image: "keks1", productTitle: "Many maker", price: "15$", count: "20kg"))
-        goods.append(ProductModel(image: "keks12", productTitle: "Heart Breaker", price: "15$", count: "20kg"))
-        filteredGoods = goods
+//        goods.append(ProductModel(image: "keks", productTitle: "Bakery Frozen", price: "15$", count: "20kg"))
+//        goods.append(ProductModel(image: "keks1", productTitle: "Many maker", price: "15$", count: "20kg"))
+//        goods.append(ProductModel(image: "keks12", productTitle: "Heart Breaker", price: "15$", count: "20kg"))
+
         
     }
     
@@ -110,7 +119,7 @@ class ScannedTableViewController: UIViewController {
             cv.left == vw.left + 10
             cv.right == vw.right - 10
             cv.height == vw.height * 0.7
-            
+
             endBtn.width == cv.width
             endBtn.height == 44
             endBtn.centerX == vw.centerX
@@ -127,7 +136,7 @@ class ScannedTableViewController: UIViewController {
     }
     // MARK: - Setup Navigation Bar
     func setupNavigationBar() -> Void {
-        print(self.view.frame.width)
+//        print(self.view.frame.width)
         navigationItem.leftBarButtonItem?.title = "Назад"
         
         navigationItem.title = "Итог"
@@ -144,11 +153,9 @@ class ScannedTableViewController: UIViewController {
         }
         
     }
-    @objc func goBtnAction(){
-        let vc = ScannerVC()
-        self.navigationController?.pushViewController(vc, animated: true)
-        
-    }
+    
+    
+
     
 }
 
@@ -160,7 +167,6 @@ extension ScannedTableViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell  = ScannedTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: Constant.goodsTableViewCellIdentifier)
         let selectedIndex = filteredGoods[indexPath.row]
-        cell.productImage.image = UIImage(named: selectedIndex.image!)
         cell.productCard.productTitle.text = selectedIndex.productTitle
         cell.productCard.price.text = selectedIndex.price
         cell.productCard.pCount.text = selectedIndex.count

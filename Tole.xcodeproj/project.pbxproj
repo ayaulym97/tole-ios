@@ -261,10 +261,10 @@
 			isa = PBXGroup;
 			children = (
 				6E38D4D920C906E200C17F72 /* ScannerVC.swift */,
+				6EEA47EE20CA8F8B0069F43B /* ScannedTableViewController.swift */,
 				6E38D4DF20C92A7F00C17F72 /* ProductModel.swift */,
 				6EF3E65620C9E8FD00EB7D7D /* ProductView.swift */,
 				6EEA47EC20CA87CB0069F43B /* ScannedTableViewCell.swift */,
-				6EEA47EE20CA8F8B0069F43B /* ScannedTableViewController.swift */,
 			);
 			path = QRCode;
 			sourceTree = "<group>";

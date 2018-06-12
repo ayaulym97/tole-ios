@@ -2,13 +2,14 @@ import UIKit
 import AVFoundation
 import Cartography
 
-protocol tolkDelegate {
-    var filteredProducts:[Any]  {get set}
-}
 
-class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate,tolkDelegate {
-    lazy var products:[String:[String]] = ["4870002235078" : ["keks","ALBENI","15$","1"],"4870112001365" : ["keks","COCOCOLA","10$","2"]]
-    lazy var filteredProducts: [Any] = []
+protocol someDelegate {
+    func valueLable(update : Any)
+}
+class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+    var delegate : someDelegate?
+    lazy var products:[String:[String]] = ["4870002235078" : ["ALBENI","15$","1"],"4870112001365" : ["COCOCOLA","10$","2"]]
+    var filteredProducts: [ProductModel] = []
     var isScanned: Bool = true
     var barcode = ""
     
@@ -112,6 +113,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate,tolkDe
     }
     //MARK: constraints
     func setUpConstraints(){
+        
         constrain(view,upFrame,downFrame,searchBar,codeFrame,productCard,scanImage,endBtn) { (vw,up,down,searchB,codeF,card,scan,end) in
             
             up.top == vw.top + 60
@@ -156,8 +158,10 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate,tolkDe
         captureSession?.startRunning()
     }
     @objc func goBtnAction(){
+       // delegate?.valueLable(update: filteredProducts)
+        
         let vc = ScannedTableViewController()
-        vc.delegate = self
+        vc.filteredGoods = filteredProducts
         self.navigationController?.pushViewController(vc, animated: true)
         
        
@@ -213,7 +217,6 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate,tolkDe
         guard let barcodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObject) else { return }
         codeFrame.frame = barcodeObject.bounds
         
-        displayDetailsViewController(scannedCode: stringCodeValue)
         
         // Stop capturing and hence stop executing metadataOutput function over and over again
         
@@ -231,17 +234,19 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate,tolkDe
         barcode = scannedCode
         if  products.keys.contains(barcode){
             print("THIS IS KEY" )
-            productCard.productTitle.text = products[barcode]![1]
-            productCard.price.text = products[barcode]![2]
-            productCard.pCount.text = products[barcode]![3]
+            productCard.productTitle.text = products[barcode]![0]
+            productCard.price.text = products[barcode]![1]
+            productCard.pCount.text = products[barcode]![2]
             productCard.isHidden = false
             
         }
         else{
             print("ERROR" )
         }
-        filteredProducts = products[barcode]!
 
+        filteredProducts.append(ProductModel(productTitle: products[barcode]![0], price: products[barcode]![1], count: products[barcode]![2]))
+       
+        print(filteredProducts)
      
     }
     
