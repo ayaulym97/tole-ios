@@ -66,7 +66,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
         let attributeString = NSMutableAttributedString(string: "Войти",
                                                         attributes: yourAttributes)
         btn.setAttributedTitle(attributeString, for: .normal)
-        
+        btn.layer.cornerRadius = 3
         btn.backgroundColor = UIColor.aqua
         btn.addTarget(self, action: #selector(goBtnAction), for: .touchUpInside)
         return btn

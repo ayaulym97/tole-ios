@@ -56,6 +56,8 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         product.layer.shadowColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         product.layer.shadowOpacity = 0.6
         product.layer.masksToBounds = true
+        product.backgroundColor = .none
+
         product.translatesAutoresizingMaskIntoConstraints = false
         return product
     }()

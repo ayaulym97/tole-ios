@@ -14,21 +14,6 @@ class ScannedTableViewCell: UITableViewCell {
         product.translatesAutoresizingMaskIntoConstraints = false
         return product
     }()
-    lazy var productImage : UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -40,20 +25,16 @@ class ScannedTableViewCell: UITableViewCell {
     }
     
     func setupView(){
-        self.contentView.addSubview(productImage)
         self.contentView.addSubview(productCard)
+        contentView.backgroundColor = .white
     }
     
     func setupConstraints(){
-        constrain(productCard,productImage,contentView){ pc,im,cv in
-            im.width == 78
-            im.height == 78
-            im.centerY == cv.centerY
-            im.left == cv.left + 5
+        constrain(productCard,contentView){ pc,cv in
             
-            pc.width == cv.width * 0.7
+            pc.width == cv.width
             pc.height == cv.height
-            pc.left == im.right
+            pc.centerX == cv.centerX
             pc.centerY == cv.centerY
         }
     }

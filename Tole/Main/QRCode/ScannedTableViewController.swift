@@ -1,34 +1,23 @@
-//
-//  GoodsViewController.swift
-//  Tole
-//
-//  Created by Almas on 02.04.18.
-//  Copyright © 2018 Beknar Danabek. All rights reserved.
-//
-
-
-
 import UIKit
 import Cartography
+
+protocol takeDelegate{
+    func take(update : Any)
+}
 class ScannedTableViewController: UIViewController,someDelegate
 {
     func valueLable(update:Any) {
-        filteredGoods = update as! [ProductModel]
-        
-    }
+        goods = update as! [ProductModel]
+}
     
-   
     lazy var goods:[ProductModel] = []
     lazy var filteredGoods: [ProductModel] = []
-   // let backButton = UIBarButtonItem(title: "Home/Return or nohing", style: .bordered, target: nil, action: nil)
-    //MARK: - UIinit
     lazy var searchBar: UISearchBar = {
         let search = UISearchBar(frame: .zero)
         search.placeholder = Constant.goodsSearchBarPlaceHolder
         search.delegate = self
         search.backgroundColor = .white
         search.searchBarStyle = UISearchBarStyle.minimal
-        
         return search
     }()
     
@@ -36,43 +25,59 @@ class ScannedTableViewController: UIViewController,someDelegate
         let table = UITableView(frame: .zero)
         table.delegate = self
         table.dataSource = self
+        table.backgroundColor = .none
         table.register(UITableViewCell.self, forCellReuseIdentifier: Constant.goodsTableViewCellIdentifier)
         return table
     }()
     
     lazy var customView: UIView = {
         let view = UIView(frame: .zero)
-        view.backgroundColor =  UIColor.yellow
+        view.backgroundColor =  .none
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         return view
     }()
-    
-    lazy var chooseButton: UIBarButtonItem = {
-        let button = UIBarButtonItem()
-        button.tintColor = UIColor.aqua
-        button.title = Constant.goodsNavigationControllerRightButton
-        return button
+    //modal
+    lazy var modalView: UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor =  UIColor.black.withAlphaComponent(0.8)
+        view.frame = UIScreen.main.bounds
+        return view
     }()
-    
-    lazy var deletButton: UIBarButtonItem = {
-        let button = UIBarButtonItem()
-        button.tintColor = UIColor.aqua
-        button.title = Constant.goodsNavigationControllerLeftButton
-        return button
+    lazy var firstModalView: FirstModal = {
+        let product = FirstModal()
+        product.layer.borderColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9294117647, alpha: 1)
+        product.layer.borderWidth = 1.0
+        product.layer.cornerRadius = 3
+        product.layer.masksToBounds = true
+        product.translatesAutoresizingMaskIntoConstraints = false
+        product.okBtn.addTarget(self, action: #selector(firstModalAction), for: .touchUpInside)
+        return product
     }()
+    lazy var secondModalView: SecondModal = {
+        let product = SecondModal()
+        product.layer.borderColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9294117647, alpha: 1)
+        product.layer.borderWidth = 1.0
+        product.layer.cornerRadius = 3
+        product.layer.masksToBounds = true
+        product.translatesAutoresizingMaskIntoConstraints = false
+        product.okBtn.addTarget(self, action: #selector(secondModalAction), for: .touchUpInside)
+        return product
+    }()
+
+    
     lazy var endBtn: UIButton = {
         let btn = UIButton()
         let yourAttributes : [NSAttributedStringKey: Any] = [
             NSAttributedStringKey.font : UIFont.systemFont(ofSize: 17),
             NSAttributedStringKey.foregroundColor : UIColor.white,
             ]
-        let attributeString = NSMutableAttributedString(string: "Высчитать",
+        let attributeString = NSMutableAttributedString(string: "Произвести списание",
                                                         attributes: yourAttributes)
         btn.setAttributedTitle(attributeString, for: .normal)
         btn.layer.cornerRadius = 3
         btn.backgroundColor = UIColor.aqua
-       // btn.addTarget(self, action: #selector(goBtnAction), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(showModal), for: .touchUpInside)
         return btn
     }()
     
@@ -81,15 +86,8 @@ class ScannedTableViewController: UIViewController,someDelegate
         setupViews()
         setupConstraints()
         setupNavigationBar()
-        print(filteredGoods)
-        
-//        goods.append(ProductModel(image: "keks", productTitle: "Bakery Frozen", price: "15$", count: "20kg"))
-//        goods.append(ProductModel(image: "keks1", productTitle: "Many maker", price: "15$", count: "20kg"))
-//        goods.append(ProductModel(image: "keks12", productTitle: "Heart Breaker", price: "15$", count: "20kg"))
-
-        
     }
-    
+
     
     // MARK: UISearchBar - filter data
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -97,7 +95,6 @@ class ScannedTableViewController: UIViewController,someDelegate
             filteredGoods = goods.filter { team in
                 return (team.productTitle?.lowercased().contains(searchText.lowercased()))!
             }
-            
         } else {
             filteredGoods = goods
         }
@@ -105,58 +102,82 @@ class ScannedTableViewController: UIViewController,someDelegate
     }
     //MARK: - Initial Setup
     func setupViews(){
-        self.customView.addSubview(tableView)
-        self.customView.addSubview(searchBar)
-        self.view.addSubViews(views: [customView,endBtn])
-        
+        self.modalView.isHidden = true
+        self.firstModalView.isHidden = true
+        self.secondModalView.isHidden = true
+        tableView.separatorStyle = .none
         view.backgroundColor = UIColor.bgGray
+        self.customView.addSubview(tableView)
+        self.view.addSubViews(views: [searchBar,customView,endBtn])
+        UIApplication.shared.keyWindow?.addSubview(modalView)
+        modalView.addSubViews(views: [firstModalView,secondModalView])
+        
         
     }
     // MARK: - Constraints
     func setupConstraints(){
-        constrain(customView, tableView, searchBar ,endBtn,view){ cv,tv,sb,endBtn, vw in
-            cv.top == vw.top + 75
-            cv.left == vw.left + 10
-            cv.right == vw.right - 10
-            cv.height == vw.height * 0.7
+        constrain(tableView,customView,searchBar,endBtn,modalView,firstModalView,secondModalView,view){tv,cv,sb,endBtn,modal,fModal,sModal,vw in
 
+            sb.top == vw.top + 75
+            sb.width == vw.width * 0.9
+            sb.centerX == vw.centerX
+            sb.height == 50
+            
+            cv.top == sb.bottom + 5
+            cv.width == sb.width
+            cv.centerX == vw.centerX
+            cv.height == vw.height * 0.55
+            
+            tv.top == cv.top
+            tv.centerX == cv.centerX
+            tv.width == sb.width
+            tv.height == cv.height
+            
             endBtn.width == cv.width
             endBtn.height == 44
             endBtn.centerX == vw.centerX
-            endBtn.top == cv.bottom + 10
-            sb.top == cv.top
-            sb.left == cv.left
-            sb.right == cv.right
-            sb.height == 50
-            tv.top == sb.bottom
-            tv.left == cv.left
-            tv.right == cv.right
-            tv.bottom == cv.bottom
+            endBtn.top == cv.bottom + 5
+
+            
+            
+            
+            fModal.width == modal.width * 0.9
+            fModal.height == modal.height * 0.4
+            fModal.centerX == modal.centerX
+            fModal.centerY == modal.centerY
+            
+            sModal.width == modal.width * 0.9
+            sModal.height == modal.height * 0.3
+            sModal.centerX == modal.centerX
+            sModal.centerY == modal.centerY
+   
         }
     }
     // MARK: - Setup Navigation Bar
     func setupNavigationBar() -> Void {
-//        print(self.view.frame.width)
         navigationItem.leftBarButtonItem?.title = "Назад"
-        
         navigationItem.title = "Итог"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.navTitle]
     }
-    
-    @objc func choose(_ sender : Any){
-        tableView.isEditing = !tableView.isEditing
-        switch tableView.isEditing {
-        case true:
-            navigationItem.rightBarButtonItem?.tintColor = UIColor.bgGray
-        case false:
-            navigationItem.rightBarButtonItem?.tintColor = UIColor.navItem
-        }
-        
+    @objc func showModal(){
+        self.modalView.isHidden = false
+        self.firstModalView.isHidden = false
+        firstModalView.popUp(view: firstModalView)
     }
-    
-    
-
-    
+    @objc func firstModalAction(){
+        
+        self.secondModalView.isHidden = false
+        secondModalView.popUp(view: secondModalView)
+        self.firstModalView.isHidden = true
+    }
+    @objc func secondModalAction(){
+        self.modalView.isHidden = true
+        self.firstModalView.isHidden = true
+        self.secondModalView.isHidden = true
+        let vc = ProductTableViewController()
+        vc.list = filteredGoods
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 // MARK: - extension UITableView
@@ -167,6 +188,10 @@ extension ScannedTableViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell  = ScannedTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: Constant.goodsTableViewCellIdentifier)
         let selectedIndex = filteredGoods[indexPath.row]
+        cell.layer.cornerRadius = 3
+        cell.layer.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9450980392, blue: 0.9450980392, alpha: 1)
+        cell.layer.borderWidth = 1
+        cell.backgroundColor = .none
         cell.productCard.productTitle.text = selectedIndex.productTitle
         cell.productCard.price.text = selectedIndex.price
         cell.productCard.pCount.text = selectedIndex.count
@@ -196,6 +221,15 @@ extension ScannedTableViewController: UITableViewDelegate,UITableViewDataSource{
 
 //MARK: - extension UISearchBar
 extension ScannedTableViewController: UISearchBarDelegate{
+    
+}
+extension UIView {
+    func popUp(view : UIView){
+        view.transform = CGAffineTransform(scaleX: 0.8, y: 1.2)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [],  animations: {
+            view.transform = .identity
+        })
+    }
     
 }
 
