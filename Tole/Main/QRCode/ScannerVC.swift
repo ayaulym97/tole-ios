@@ -56,8 +56,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         product.layer.shadowColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         product.layer.shadowOpacity = 0.6
         product.layer.masksToBounds = true
-        product.backgroundColor = .none
-
+        product.backgroundColor = .white
         product.translatesAutoresizingMaskIntoConstraints = false
         return product
     }()
@@ -101,7 +100,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        videoPreviewLayer!.frame = downFrame.bounds
+        videoPreviewLayer!.frame = self.downFrame.bounds
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action:#selector(ScannerVC.swipeDown))
         swipeDown.direction = UISwipeGestureRecognizerDirection.right
@@ -142,11 +141,11 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             codeF.width == down.width * 0.5
             
             scan.centerX == down.centerX
-            scan.centerY == down.centerY - 30
-            scan.width == down.width * 0.7
-            scan.height == down.height * 0.6
+            scan.centerY == down.centerY
+            scan.width == down.width * 0.8
+            scan.height == down.height * 0.5
             
-            end.width == down.width * 0.8
+            end.width == down.width * 0.9
             end.height == 44
             end.centerX == down.centerX
             end.top == scan.bottom + 10

@@ -9,31 +9,18 @@
 import UIKit
 import Cartography
 class StorageTableViewCell: UITableViewCell {
-   
-    lazy var productTitle: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = #colorLiteral(red: 0.2901960784, green: 0.2901960784, blue: 0.2901960784, alpha: 1)
-        label.text = ""
-        return label
-    }()
 
-    
-    lazy var price: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = .lightGray
-        label.text = ""
-        return label
+    lazy var productCard: ProductView = {
+        let product = ProductView()
+        product.backgroundColor = .white
+        product.translatesAutoresizingMaskIntoConstraints = false
+        return product
     }()
-    
-    lazy var pCount: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = .lightGray
-        label.text = ""
-        label.textAlignment = .right
-        return label
+    lazy var nextBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(#imageLiteral(resourceName: "next"), for: .normal)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
     }()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,26 +33,22 @@ class StorageTableViewCell: UITableViewCell {
     }
     
     func setupView(){
-        self.contentView.addSubViews(views: [productTitle,price,pCount])
+        self.contentView.addSubViews(views: [productCard,nextBtn])
         contentView.backgroundColor = .white
     }
     
     func setupConstraints(){
-        constrain(productTitle,price,pCount,contentView){ pt,price,count,cv in
-            pt.top == cv.top + 5
-            pt.width == cv.width * 0.8
-            pt.height == cv.height * 0.5
-            pt.left == cv.left + 5
+        constrain(productCard,nextBtn,contentView){ card,btn,cv in
+            card.width == cv.width * 0.8
+            card.height == cv.height
+            card.top == cv.top
+            card.centerY == cv.centerY
             
-            price.top == pt.bottom + 5
-            price.width == pt.width * 0.5
-            price.height == pt.height
-            price.left == cv.left + 5
-            
-            count.top == pt.bottom + 5
-            count.width == price.width
-            count.height == price.height
-            count.left == price.right
+            btn.width == cv.width * 0.2
+            btn.height == cv.height
+            btn.top == cv.top
+            btn.centerY == cv.centerY
+            btn.left == card.right
         }
     }
 

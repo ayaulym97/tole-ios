@@ -14,6 +14,7 @@ class ScannedTableViewCell: UITableViewCell {
         product.translatesAutoresizingMaskIntoConstraints = false
         return product
     }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()

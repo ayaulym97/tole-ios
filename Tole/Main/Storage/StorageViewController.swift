@@ -113,9 +113,9 @@ extension StorageViewController: UITableViewDelegate,UITableViewDataSource{
         cell.layer.borderColor = #colorLiteral(red: 0.9529411765, green: 0.9450980392, blue: 0.9450980392, alpha: 1)
         cell.layer.borderWidth = 1
         cell.backgroundColor = .none
-        cell.productTitle.text = selectedIndex.productTitle
-        cell.price.text = selectedIndex.price
-        cell.pCount.text = selectedIndex.count
+        cell.productCard.productTitle.text = selectedIndex.productTitle
+        cell.productCard.price.text = selectedIndex.price
+        cell.productCard.pCount.text = selectedIndex.count
         return cell
         
     }
@@ -126,16 +126,6 @@ extension StorageViewController: UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = deleteAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete])
-    }
-    func deleteAction(at indexPath : IndexPath) -> UIContextualAction{
-        let deleteAction = UIContextualAction(style: .destructive, title: "",handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            self.filteredGoods.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            success(true)
-        })
-        deleteAction.backgroundColor =  .red
-        deleteAction.image = #imageLiteral(resourceName: "del")
-        return deleteAction
     }
     
 }
