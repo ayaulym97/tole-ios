@@ -212,6 +212,9 @@ class ProductTableViewController: UIViewController,takeDelegate {
         let vc = ScannerVC()
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        
+    }
     
     // MARK: - Setup Navigation Bar
     func setupNavigationBar() -> Void {

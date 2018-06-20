@@ -1,6 +1,7 @@
 import UIKit
 import Cartography
 
+
 protocol takeDelegate{
     func take(update : Any)
 }
