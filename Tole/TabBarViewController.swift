@@ -7,32 +7,38 @@
 //
 
 import UIKit
-//MARK:main root
 
+//MARK:main root
 class TabBarViewController: UITabBarController {
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.navigationItem.hidesBackButton = true;
         view.backgroundColor = UIColor.white
-        let homeViewController = HomeViewController()
-        homeViewController.tabBarItem = UITabBarItem(title: "", image: #imageLiteral(resourceName: "home"), tag: 0)
-        let qrCodeNav:UINavigationController?
-        qrCodeNav = UINavigationController(rootViewController: ScannerVC())
-        qrCodeNav?.tabBarItem = UITabBarItem(title: "", image: #imageLiteral(resourceName: "qrcode"), tag: 1)
-
-        let addViewController = AddAndSaleProductViewController()
-        addViewController.tabBarItem = UITabBarItem(title: "", image: #imageLiteral(resourceName: "add"), tag: 2)
-        let storageViewController = StorageViewController()
-        storageViewController.tabBarItem = UITabBarItem(title: "", image: #imageLiteral(resourceName: "storage"), tag: 3)
-        let settingViewController = MyProfileViewController()
-        settingViewController.tabBarItem = UITabBarItem(title: "", image: #imageLiteral(resourceName: "setting"), tag: 4)
-        let viewControllerList = [ homeViewController,qrCodeNav, addViewController,storageViewController,settingViewController ]
-        viewControllers = viewControllerList as? [UIViewController]
+        setupTabBar()
+        
     }
+    func setupTabBar() {
+        let HomeVC = createNavController(vc: HomeViewController(), unselected: #imageLiteral(resourceName: "home"), tag: 0)
+        let QRCodeVC = createNavController(vc: ScannerVC(), unselected: #imageLiteral(resourceName: "qrcode"), tag: 1)
+        let AddVC = createNavController(vc: AddAndSaleProductViewController(), unselected: #imageLiteral(resourceName: "add"), tag: 2)
+        let StorageVC = createNavController(vc: StorageViewController(), unselected: #imageLiteral(resourceName: "storage"), tag: 3)
+        let SettingsVC = createNavController(vc: MyProfileViewController(), unselected: #imageLiteral(resourceName: "setting"), tag: 4)
+        
+        viewControllers = [HomeVC,QRCodeVC,AddVC,StorageVC,SettingsVC]
+        guard let items = tabBar.items else { return }
+        
+        for item in items {
+            item.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
+        }
+    }
+}
+extension UITabBarController {
     
-  
-
- 
-
+    func createNavController(vc: UIViewController, unselected: UIImage, tag: Int) -> UINavigationController {
+        let viewController = vc
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.tabBarItem.image = unselected
+        navController.tabBarItem.tag = tag
+        return navController
+    }
 }

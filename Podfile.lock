@@ -1,22 +1,26 @@
 PODS:
+  - BetterSegmentedControl (0.9)
   - Cartography (3.0.2)
   - Charts (3.1.1):
     - Charts/Core (= 3.1.1)
   - Charts/Core (3.1.1)
 
 DEPENDENCIES:
+  - BetterSegmentedControl
   - Cartography
   - Charts
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - BetterSegmentedControl
     - Cartography
     - Charts
 
 SPEC CHECKSUMS:
+  BetterSegmentedControl: 40b2b6a08bbc59663149624d1b5235efa8d43a3c
   Cartography: 231190d7d0b3107ce8d67c54189f059a509b3760
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
 
-PODFILE CHECKSUM: b2503e9d3019cf39347cfec2ae50e2cb361bb94f
+PODFILE CHECKSUM: 006913621a89363bf0f0316646c246676ef1adc3
 
 COCOAPODS: 1.5.3

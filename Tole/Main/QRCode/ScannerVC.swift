@@ -90,18 +90,11 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         scanner()
         setUpView()
         setUpConstraints()
-
-
-        
-        
-        
     }
-    
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        videoPreviewLayer!.frame = self.downFrame.bounds
         
+        videoPreviewLayer!.frame = downFrame.bounds
         let swipeDown = UISwipeGestureRecognizer(target: self, action:#selector(ScannerVC.swipeDown))
         swipeDown.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(swipeDown)

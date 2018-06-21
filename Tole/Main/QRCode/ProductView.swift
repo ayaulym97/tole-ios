@@ -2,7 +2,7 @@
 import UIKit
 import Cartography
 class ProductView: UIView {
-    var cur = 0;
+   
     lazy var productTitle: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = UIFont.systemFont(ofSize: 18)
@@ -32,14 +32,7 @@ class ProductView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    @objc func add(){
-        cur = Int(pCount.text!)!
-        self.pCount.text = String(cur + 1);
-    }
-    @objc func drop(){
-        cur = Int(pCount.text!)!
-        self.pCount.text = String(cur - 1);
-    }
+    
     func setupView(){
         self.addSubViews(views: [productTitle,price,pCount])
     }

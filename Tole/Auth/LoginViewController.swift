@@ -99,7 +99,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     }
     //MARK: - Initial Setup
     func setupViews(){
-        self.navigationItem.hidesBackButton = true;
+//        self.navigationItem.hidesBackButton = true;
         self.view.addSubview(txtView)
         self.view.addSubview(loginImage)
         txtView.addSubview(phoneField)
@@ -115,8 +115,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
         constrain(view,loginImage,txtView,phoneField,passwordField,forgotBtn,nextBtn) { (vw,lg,txtView,phoneField,password,forgotBtn,nextBtn) in
             lg.width == vw.width
             lg.height == vw.height*0.39
-            lg.top == lg.superview!.top + (self.navigationController?.navigationBar.frame.height)! + 20
-            
+//            lg.top == lg.superview!.top + (self.navigationController?.navigationBar.frame.height)! + 20
+            lg.top == lg.superview!.top  + 65
             txtView.top == lg.bottom + 45
             txtView.left == vw.left + 40
             txtView.width == vw.width * 0.8
@@ -152,15 +152,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     }
     //Mark:Btn Actions
     @objc private func goBtnAction() {
-        
-            let vc = TabBarViewController()
-            navigationController?.pushViewController(vc, animated: true)
-        
-        
+        let vc = TabBarViewController()
+        navigationItem.title = ""
+        navigationController?.pushViewController(vc, animated: true)
         
     }
     @objc private func forgotBtnAction() {
         let vc = ForgotPasswordViewController()
+        navigationItem.title = "Назад"
+        
         navigationController?.pushViewController(vc, animated: true)
         
     }

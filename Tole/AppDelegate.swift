@@ -31,15 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             navigationController = UINavigationController(rootViewController: TutorialCollectionViewController())
         }
-        
+
         window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
         window?.rootViewController = navigationController
         window?.backgroundColor = .white
         UINavigationBar.appearance().layer.borderWidth = 2
         UINavigationBar.appearance().layer.borderColor = UIColor.black.cgColor
         UINavigationBar.appearance().backgroundColor = .white
-        
-        window?.makeKeyAndVisible()
     }
 
 

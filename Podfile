@@ -8,5 +8,5 @@ target 'Tole' do
   # Pods for Tole
   pod 'Cartography'
   pod 'Charts'
-
+  pod 'BetterSegmentedControl'
 end

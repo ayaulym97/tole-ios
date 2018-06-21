@@ -162,7 +162,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate{
     }
     // MARK: - Setup Navigation Bar
     func setupNavigationBar() -> Void {
-        navigationItem.title = "Войти"
+        navigationItem.title = "Забыли пароль"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.navTitle]
         
     }

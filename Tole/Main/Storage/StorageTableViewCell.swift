@@ -48,6 +48,7 @@ class StorageTableViewCell: UITableViewCell {
             btn.height == cv.height
             btn.top == cv.top
             btn.centerY == cv.centerY
+            
             btn.left == card.right
         }
     }
