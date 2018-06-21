@@ -148,6 +148,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
     func setupNavigationBar() -> Void {
         navigationItem.title = "Войти"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.navTitle]
+        
       
     }
     //Mark:Btn Actions

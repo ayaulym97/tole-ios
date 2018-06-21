@@ -208,7 +208,7 @@ extension StorageProduct: UITableViewDelegate, UITableViewDataSource{
         cell.label.font = UIFont.init(name: "Arial", size: 15)
         cell.textField.delegate = self
         cell.selectionStyle = .none
-        cell.textField.endEditing(true)
+      //  cell.textField.endEditing(true)
         if indexPath.row == 4 {
             cell.textField.isSecureTextEntry = true
         }
