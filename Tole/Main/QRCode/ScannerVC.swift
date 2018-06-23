@@ -90,6 +90,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         scanner()
         setUpView()
         setUpConstraints()
+        setupNavigations()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -160,6 +161,10 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         
        
    
+    }
+    func setupNavigations(){
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        navigationItem.title = "Показатели"
     }
     
     func scanner() {

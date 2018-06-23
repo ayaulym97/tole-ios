@@ -155,7 +155,7 @@ extension TutorialCollectionViewController: UICollectionViewDelegate, UICollecti
     @objc private func goBtnAction() {
         let vc = LoginViewController()
         navigationController?.pushViewController(vc, animated: true)
-        print("Hello Bitches")
+        //print("Hello Bitches")
         
     }
     

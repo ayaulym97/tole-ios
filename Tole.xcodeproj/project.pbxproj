@@ -36,6 +36,7 @@
 		6E4BEC4720D40E910047DE13 /* FirstModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4BEC4620D40E910047DE13 /* FirstModal.swift */; };
 		6E6F5D4520C5210B007E49B6 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6F5D4420C5210B007E49B6 /* ForgotPasswordViewController.swift */; };
 		6E89E5F220DA90F40045E5AE /* Asset.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E89E5F120DA90F40045E5AE /* Asset.xcassets */; };
+		6EDC725D20DCED6E000F75C7 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC725C20DCED6E000F75C7 /* ChangePasswordViewController.swift */; };
 		6EE10AA920D4E6C800FEBAB6 /* SecondModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE10AA820D4E6C800FEBAB6 /* SecondModal.swift */; };
 		6EEA47ED20CA87CB0069F43B /* ScannedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEA47EC20CA87CB0069F43B /* ScannedTableViewCell.swift */; };
 		6EEA47EF20CA8F8B0069F43B /* ScannedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEA47EE20CA8F8B0069F43B /* ScannedTableViewController.swift */; };
@@ -96,6 +97,7 @@
 		6E4BEC4620D40E910047DE13 /* FirstModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstModal.swift; sourceTree = "<group>"; };
 		6E6F5D4420C5210B007E49B6 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		6E89E5F120DA90F40045E5AE /* Asset.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Asset.xcassets; sourceTree = "<group>"; };
+		6EDC725C20DCED6E000F75C7 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		6EE10AA820D4E6C800FEBAB6 /* SecondModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondModal.swift; sourceTree = "<group>"; };
 		6EEA47EC20CA87CB0069F43B /* ScannedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTableViewCell.swift; sourceTree = "<group>"; };
 		6EEA47EE20CA8F8B0069F43B /* ScannedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTableViewController.swift; sourceTree = "<group>"; };
@@ -206,7 +208,6 @@
 				70346BE82076A01000CACC6C /* GoodsViewController.swift */,
 				18EF146A2072890B0079CCFA /* TutorialCollectionViewController.swift */,
 				5C14BC882072A0AB0049DE81 /* EmployeeRegisterViewController.swift */,
-				0D026E3C207A3E9C0026D455 /* MyProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -253,6 +254,7 @@
 			children = (
 				6E2EB40120C297120064F1C3 /* LoginViewController.swift */,
 				6E6F5D4420C5210B007E49B6 /* ForgotPasswordViewController.swift */,
+				6EDC725C20DCED6E000F75C7 /* ChangePasswordViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -316,6 +318,7 @@
 		6E2EB3FE20C294630064F1C3 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				0D026E3C207A3E9C0026D455 /* MyProfileViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				18EF146F20728FA10079CCFA /* UIViewExtension.swift in Sources */,
 				0D2C55EF20713EB9002C71B8 /* Constant.swift in Sources */,
 				6EEA47ED20CA87CB0069F43B /* ScannedTableViewCell.swift in Sources */,
+				6EDC725D20DCED6E000F75C7 /* ChangePasswordViewController.swift in Sources */,
 				7A2FCD4D2078B15E009B9BFF /* NotificationCell.swift in Sources */,
 				7A2FCD4B2078B093009B9BFF /* NotificationViewController.swift in Sources */,
 				6E2EB40020C294840064F1C3 /* HomeViewController.swift in Sources */,

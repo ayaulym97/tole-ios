@@ -1,3 +1,4 @@
+
 //
 //  LoginViewController.swift
 //  Tole
@@ -9,25 +10,22 @@
 import UIKit
 import Cartography
 class LoginViewController: UIViewController,UITextFieldDelegate{
-    //MARK: - UIinit
+    
     lazy var loginImage:UIImageView = {
         let image = UIImageView(image: UIImage(named:"loginImage"))
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     lazy var txtView:UIView = {
-        let view = UIView();
-        view.layer.borderColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9294117647, alpha: 1)
-        view.layer.borderWidth = 1.0
-        view.layer.cornerRadius = 3
+        let view = UIView()
         view.layer.masksToBounds = true
-        view.backgroundColor = .white
+        vw.layer.borderWidth = 1
+        vw.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         return view
     }()
     lazy var phoneField:UITextField = {
         let text = UITextField()
         text.textAlignment = NSTextAlignment.left
-        text.borderStyle = UITextBorderStyle.roundedRect
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 0))
         text.leftView = leftView
         text.leftViewMode = .always
@@ -38,36 +36,35 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
         text.textColor = UIColor.tableLabel
         text.backgroundColor = UIColor.white
         text.placeholder = "Введите номер или эл.почту"
+        text.isSecureTextEntry = true
+        text.keyboardType = .emailAddress
         return text
     }()
     lazy var passwordField:UITextField = {
         let text = UITextField()
         text.textAlignment = NSTextAlignment.left
-        text.borderStyle = UITextBorderStyle.none
         let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 0))
         text.leftView = leftView
+        text.backgroundColor = .white
         text.leftViewMode = .always
         text.delegate = self
         text.font = UIFont.init(name: "Arial", size: 17)
+        text.textColor = UIColor.tableLabel
         text.textColor = UIColor.white
-        
         text.placeholder = "Пароль"
-        text.keyboardType = .numberPad
-        
-
         return text
     }()
     lazy var nextBtn: UIButton = {
         let btn = UIButton()
         let yourAttributes : [NSAttributedStringKey: Any] = [
             NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18),
-            NSAttributedStringKey.foregroundColor : UIColor.white
+            NSAttributedStringKey.foregroundColor : UIColor.white,
             ]
         let attributeString = NSMutableAttributedString(string: "Войти",
                                                         attributes: yourAttributes)
         btn.setAttributedTitle(attributeString, for: .normal)
-        btn.layer.cornerRadius = 3
-        btn.backgroundColor = UIColor.aqua
+        btn.layer.cornerRadius = 2
+        btn.backgroundColor = #colorLiteral(red: 0.2705882353, green: 0.6431372549, blue: 0.6901960784, alpha: 1)
         btn.addTarget(self, action: #selector(goBtnAction), for: .touchUpInside)
         return btn
     }()
@@ -86,40 +83,38 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
         return btn
     }()
     
+    lazy var vw:UIView = {
+        let vw = UIView()
+        vw.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        return vw
+    }()
     
-    
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-            setupViews()
-            setUpConstraints()
-            setupNavigationBar()
+        setupViews()
+        setUpConstraints()
+        setupNavigations()
     }
+    
     //MARK: - Initial Setup
     func setupViews(){
-//        self.navigationItem.hidesBackButton = true;
-        self.view.addSubview(txtView)
-        self.view.addSubview(loginImage)
-        txtView.addSubview(phoneField)
-        txtView.addSubview(passwordField)
-        self.view.addSubview(forgotBtn)
-        self.view.addSubview(nextBtn)
-    
+        self.navigationItem.hidesBackButton = true
+        
+        txtView.addViews([phoneField,passwordField, vw])
+        self.view.addViews([txtView,loginImage,forgotBtn,nextBtn])
         view.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9607843137, blue: 0.9607843137, alpha: 1)
         
     }
-    //Constraints
+    
     func setUpConstraints(){
-        constrain(view,loginImage,txtView,phoneField,passwordField,forgotBtn,nextBtn) { (vw,lg,txtView,phoneField,password,forgotBtn,nextBtn) in
+        constrain(view,loginImage,txtView,phoneField,passwordField,forgotBtn,nextBtn,vw) { (vw,lg,txtView,phoneField,password,forgotBtn,nextBtn,vwq) in
             lg.width == vw.width
             lg.height == vw.height*0.39
-//            lg.top == lg.superview!.top + (self.navigationController?.navigationBar.frame.height)! + 20
             lg.top == lg.superview!.top  + 65
+            
             txtView.top == lg.bottom + 45
-            txtView.left == vw.left + 40
-            txtView.width == vw.width * 0.8
+            txtView.centerX == txtView.superview!.centerX
+            txtView.width == vw.width*0.8
             txtView.height == 0.17*view.bounds.height
             
             phoneField.width == txtView.width
@@ -127,12 +122,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
             phoneField.leading == txtView.leading
             phoneField.height == txtView.height*0.5
             
+            vwq.width == phoneField.width
+            vwq.height == 1
+            vwq.centerX == phoneField.centerX
+            vwq.top == phoneField.bottom
+            
             password.width == phoneField.width
-            password.top == phoneField.bottom
-            password.leading == txtView.leading
+            password.top == vwq.bottom
+            password.centerX == phoneField.centerX
             password.height == phoneField.height
             
-            forgotBtn.width == password.width
+            forgotBtn.width == txtView.width
             forgotBtn.top == password.bottom
             forgotBtn.left == password.left
             
@@ -140,30 +140,22 @@ class LoginViewController: UIViewController,UITextFieldDelegate{
             nextBtn.height == password.height
             nextBtn.top == forgotBtn.bottom+10
             nextBtn.left == forgotBtn.left
-            
-            
         }
     }
     // MARK: - Setup Navigation Bar
-    func setupNavigationBar() -> Void {
+    func setupNavigations(){
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.navTitle]
         navigationItem.title = "Войти"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.navTitle]
-        
-      
     }
-    //Mark:Btn Actions
     @objc private func goBtnAction() {
         let vc = TabBarViewController()
-        navigationItem.title = ""
-        navigationController?.pushViewController(vc, animated: true)
-        
+        self.present(vc, animated: false, completion: nil)
     }
     @objc private func forgotBtnAction() {
-        let vc = ForgotPasswordViewController()
-        navigationItem.title = "Назад"
-        
-        navigationController?.pushViewController(vc, animated: true)
-        
+        let vc = UINavigationController.init(rootViewController: LoginViewController())
+        vc.pushViewController(ForgotPasswordViewController(), animated: true)
+        self.present(vc, animated: false, completion: nil)
     }
-   
+    
 }
+

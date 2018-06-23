@@ -111,8 +111,8 @@ class HomeViewController: UIViewController {
     }
     
     func setupNavigations(){
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
-        self.title = "Показатели"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.navTitle]
+        navigationItem.title = "Показатели"
     }
     
 }

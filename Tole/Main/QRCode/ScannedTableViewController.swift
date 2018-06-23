@@ -39,32 +39,7 @@ class ScannedTableViewController: UIViewController,someDelegate
         return view
     }()
     //modal
-    lazy var modalView: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor =  UIColor.black.withAlphaComponent(0.8)
-        view.frame = UIScreen.main.bounds
-        return view
-    }()
-    lazy var firstModalView: FirstModal = {
-        let product = FirstModal()
-        product.layer.borderColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9294117647, alpha: 1)
-        product.layer.borderWidth = 1.0
-        product.layer.cornerRadius = 3
-        product.layer.masksToBounds = true
-        product.translatesAutoresizingMaskIntoConstraints = false
-        product.okBtn.addTarget(self, action: #selector(firstModalAction), for: .touchUpInside)
-        return product
-    }()
-    lazy var secondModalView: SecondModal = {
-        let product = SecondModal()
-        product.layer.borderColor = #colorLiteral(red: 0.9254901961, green: 0.9254901961, blue: 0.9294117647, alpha: 1)
-        product.layer.borderWidth = 1.0
-        product.layer.cornerRadius = 3
-        product.layer.masksToBounds = true
-        product.translatesAutoresizingMaskIntoConstraints = false
-        product.okBtn.addTarget(self, action: #selector(secondModalAction), for: .touchUpInside)
-        return product
-    }()
+
 
     
     lazy var endBtn: UIButton = {
@@ -78,7 +53,7 @@ class ScannedTableViewController: UIViewController,someDelegate
         btn.setAttributedTitle(attributeString, for: .normal)
         btn.layer.cornerRadius = 3
         btn.backgroundColor = UIColor.aqua
-        btn.addTarget(self, action: #selector(showModal), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(goNextPage), for: .touchUpInside)
         return btn
     }()
     
@@ -103,21 +78,14 @@ class ScannedTableViewController: UIViewController,someDelegate
     }
     //MARK: - Initial Setup
     func setupViews(){
-        self.modalView.isHidden = true
-        self.firstModalView.isHidden = true
-        self.secondModalView.isHidden = true
         tableView.separatorStyle = .none
         view.backgroundColor = UIColor.bgGray
         self.customView.addSubview(tableView)
         self.view.addSubViews(views: [searchBar,customView,endBtn])
-        UIApplication.shared.keyWindow?.addSubview(modalView)
-        modalView.addSubViews(views: [firstModalView,secondModalView])
-        
-        
     }
     // MARK: - Constraints
     func setupConstraints(){
-        constrain(tableView,customView,searchBar,endBtn,modalView,firstModalView,secondModalView,view){tv,cv,sb,endBtn,modal,fModal,sModal,vw in
+        constrain(tableView,customView,searchBar,endBtn,view){tv,cv,sb,endBtn,vw in
 
             sb.top == vw.top + 75
             sb.width == vw.width * 0.9
@@ -138,19 +106,6 @@ class ScannedTableViewController: UIViewController,someDelegate
             endBtn.height == 44
             endBtn.centerX == vw.centerX
             endBtn.top == cv.bottom + 5
-
-            
-            
-            
-            fModal.width == modal.width * 0.9
-            fModal.height == modal.height * 0.4
-            fModal.centerX == modal.centerX
-            fModal.centerY == modal.centerY
-            
-            sModal.width == modal.width * 0.9
-            sModal.height == modal.height * 0.3
-            sModal.centerX == modal.centerX
-            sModal.centerY == modal.centerY
    
         }
     }
@@ -160,21 +115,8 @@ class ScannedTableViewController: UIViewController,someDelegate
         navigationItem.title = "Итог"
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.navTitle]
     }
-    @objc func showModal(){
-        self.modalView.isHidden = false
-        self.firstModalView.isHidden = false
-        firstModalView.popUp(view: firstModalView)
-    }
-    @objc func firstModalAction(){
-        
-        self.secondModalView.isHidden = false
-        secondModalView.popUp(view: secondModalView)
-        self.firstModalView.isHidden = true
-    }
-    @objc func secondModalAction(){
-        self.modalView.isHidden = true
-        self.firstModalView.isHidden = true
-        self.secondModalView.isHidden = true
+
+    @objc func goNextPage(){
         let vc = ProductTableViewController()
         vc.list = filteredGoods
         self.navigationController?.pushViewController(vc, animated: true)
